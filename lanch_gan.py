@@ -9,13 +9,12 @@ np.random.seed()
 # Crea una finestra per mostrare il filmato
 width = 512
 heigh = 660
-cv2.namedWindow('Generated Film', cv2.WINDOW_NORMAL)
-cv2.resizeWindow('Generated Film', width, heigh)
+# cv2.namedWindow('Generated Film', cv2.WINDOW_NORMAL)
+# cv2.resizeWindow('Generated Film', width, heigh)
 
 
 # Carica il modello TFLite
-interpreter = tflite.Interpreter(model_path="distill_quant_edgetpu.tflite",
-                                 experimental_delegates=[tflite.load_delegate('libedgetpu.so.1')])
+interpreter = tflite.Interpreter(model_path="distill_quant.tflite")
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
@@ -56,14 +55,15 @@ while True:
         # Mostra la prima immagine subito
         if i == 0:
             if first_run:
-                cv2.imshow('Generated Film', image)
-                if cv2.waitKey(30) & 0xFF == ord('q'):
-                    break
+                # cv2.imshow('Generated Film', image)
+                # if cv2.waitKey(30) & 0xFF == ord('q'):
+                #     break
                 first_run = False
             else:
-                cv2.imshow('Generated Film', last_image)
-                if cv2.waitKey(30) & 0xFF == ord('q'):
-                    break
+                # cv2.imshow('Generated Film', last_image)
+                # if cv2.waitKey(30) & 0xFF == ord('q'):
+                #     break
+                pass
 
         end_time = time.perf_counter()
         cpu_time = (end_time - start_time)
@@ -75,8 +75,9 @@ while True:
 
     # Mostra le immagini
     for img in images_list:
-        cv2.imshow('Generated Film', img)
-        if cv2.waitKey(30) & 0xFF == ord('q'):
-            break
+        # cv2.imshow('Generated Film', img)
+        # if cv2.waitKey(30) & 0xFF == ord('q'):
+        #     break
+        pass
     last_image = img
     images_list = []  # pulisco il vettore transizione
