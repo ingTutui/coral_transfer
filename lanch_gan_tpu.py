@@ -6,8 +6,8 @@ import time
 
 np.random.seed()
 # Crea una finestra per mostrare il filmato
-width = 1920
-heigh = 1080
+width = 960
+heigh = 540
 cv2.namedWindow('Generated Film', cv2.WINDOW_NORMAL)
 cv2.setWindowProperty('Generated Film', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 cv2.resizeWindow('Generated Film', width, heigh)
