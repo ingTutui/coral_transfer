@@ -4,12 +4,12 @@ import tflite_runtime.interpreter as tflite
 import time
 
 
-
 np.random.seed()
 # Crea una finestra per mostrare il filmato
-width = 512
-heigh = 660
+width = 1920
+heigh = 1080
 cv2.namedWindow('Generated Film', cv2.WINDOW_NORMAL)
+cv2.setWindowProperty('Generated Film', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 cv2.resizeWindow('Generated Film', width, heigh)
 
 
@@ -51,7 +51,8 @@ while True:
 
         image = output_data_float.squeeze(0).transpose(1, 2, 0)
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        image = cv2.resize(image, (width, heigh))
+        image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
+        image = cv2.resize(image, (width, heigh), interpolation=cv2.INTER_LANCZOS4)
 
         images_list.append(image)
 
@@ -70,7 +71,7 @@ while True:
 
         end_time = time.perf_counter()
         cpu_time = (end_time - start_time)
-        print(f'Ciclo ci ha messo {round(cpu_time ,4)} secondi', end='\r')
+        print(f'Ciclo {i}/{num_passi} e ci ha messo {round(cpu_time ,4)} secondi', end='\r')
 
         noise_vector += step
 
@@ -79,7 +80,7 @@ while True:
     # Mostra le immagini
     for img in images_list:
         cv2.imshow('Generated Film', img)
-        if cv2.waitKey(30) & 0xFF == ord('q'):
+        if cv2.waitKey(33) & 0xFF == ord('q'):
             break
         # pass
     last_image = img
