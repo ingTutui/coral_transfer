@@ -9,8 +9,8 @@ np.random.seed()
 # Crea una finestra per mostrare il filmato
 width = 512
 heigh = 660
-# cv2.namedWindow('Generated Film', cv2.WINDOW_NORMAL)
-# cv2.resizeWindow('Generated Film', width, heigh)
+cv2.namedWindow('Generated Film', cv2.WINDOW_NORMAL)
+cv2.resizeWindow('Generated Film', width, heigh)
 
 
 # Carica il modello TFLite
@@ -31,7 +31,7 @@ noise_vector = np.random.rand(1, 256, 1, 1).astype(np.float32)
 while True:
     # end_vector = torch.rand(1, 256, 1, 1)
     end_vector = np.random.rand(1, 256, 1, 1).astype(np.float32)
-    num_passi = 30
+    num_passi = 5
     step = (end_vector - noise_vector) / num_passi
 
     for i in range(num_passi):
@@ -58,15 +58,15 @@ while True:
         # Mostra la prima immagine subito
         if i == 0:
             if first_run:
-                # cv2.imshow('Generated Film', image)
-                # if cv2.waitKey(30) & 0xFF == ord('q'):
-                #     break
+                cv2.imshow('Generated Film', image)
+                if cv2.waitKey(30) & 0xFF == ord('q'):
+                    break
                 first_run = False
             else:
-                # cv2.imshow('Generated Film', last_image)
-                # if cv2.waitKey(30) & 0xFF == ord('q'):
-                #     break
-                pass
+                cv2.imshow('Generated Film', last_image)
+                if cv2.waitKey(30) & 0xFF == ord('q'):
+                    break
+                # pass
 
         end_time = time.perf_counter()
         cpu_time = (end_time - start_time)
@@ -78,9 +78,9 @@ while True:
 
     # Mostra le immagini
     for img in images_list:
-        # cv2.imshow('Generated Film', img)
-        # if cv2.waitKey(30) & 0xFF == ord('q'):
-        #     break
-        pass
+        cv2.imshow('Generated Film', img)
+        if cv2.waitKey(30) & 0xFF == ord('q'):
+            break
+        # pass
     last_image = img
     images_list = []  # pulisco il vettore transizione
