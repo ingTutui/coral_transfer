@@ -15,8 +15,8 @@ cv2.resizeWindow('Generated Film', width, heigh)
 cv2.setWindowProperty('Generated Film', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)  # Set the window to fullscreen mode
 
 # plotta logo
-logo_image = cv2.imread('esp_logo.png')
-cv2.imshow('Generated Film', logo_image)
+#logo_image = cv2.imread('esp_logo.png')
+#cv2.imshow('Generated Film', logo_image)
 
 
 # Carica il modello TFLite
@@ -66,13 +66,13 @@ while True:
         if i == 0:
             if first_run:
                 cv2.imshow('Generated Film', image)
-                # if cv2.waitKey(30) & 0xFF == ord('q'):
-                #     break
+                if cv2.waitKey(30) & 0xFF == ord('q'):
+                    break
                 first_run = False
             else:
                 cv2.imshow('Generated Film', last_image)
-                # if cv2.waitKey(30) & 0xFF == ord('q'):
-                #     break
+                if cv2.waitKey(30) & 0xFF == ord('q'):
+                    break
                 # pass
 
         end_time = time.perf_counter()
