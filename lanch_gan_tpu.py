@@ -4,12 +4,19 @@ import tflite_runtime.interpreter as tflite
 import time
 
 
+
 np.random.seed()
 # Crea una finestra per mostrare il filmato
-width = 1920
-heigh = 1080
+width = 960
+heigh = 540
 cv2.namedWindow('Generated Film', cv2.WINDOW_NORMAL)
 cv2.resizeWindow('Generated Film', width, heigh)
+
+cv2.setWindowProperty('Generated Film', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)  # Set the window to fullscreen mode
+
+# plotta logo
+logo_image = cv2.imread('esp_logo.png')
+cv2.imshow('Generated Film', logo_image)
 
 
 # Carica il modello TFLite
@@ -59,28 +66,33 @@ while True:
         if i == 0:
             if first_run:
                 cv2.imshow('Generated Film', image)
-                if cv2.waitKey(30) & 0xFF == ord('q'):
-                    break
+                # if cv2.waitKey(30) & 0xFF == ord('q'):
+                #     break
                 first_run = False
             else:
                 cv2.imshow('Generated Film', last_image)
-                if cv2.waitKey(30) & 0xFF == ord('q'):
-                    break
+                # if cv2.waitKey(30) & 0xFF == ord('q'):
+                #     break
                 # pass
 
         end_time = time.perf_counter()
         cpu_time = (end_time - start_time)
-        print(f'Ciclo {i}/{num_passi} e ci ha messo {round(cpu_time ,4)} secondi', end='\r')
+        print(f'Ciclo {i+1}/{num_passi} e ci ha messo {round(cpu_time ,4)} secondi', end='\r')
 
         noise_vector += step
 
     noise_vector = end_vector
 
     # Mostra le immagini
+    start_time = time.perf_counter()
     for img in images_list:
         cv2.imshow('Generated Film', img)
-        if cv2.waitKey(33) & 0xFF == ord('q'):
+        if cv2.waitKey(30) & 0xFF == ord('q'):
             break
-        # pass
+    end_time = time.perf_counter()
+    cpu_time = (end_time - start_time)
+    print(f'transizione di {len(images_list)} in {round(cpu_time ,4)} secondi')
+
+
     last_image = img
     images_list = []  # pulisco il vettore transizione
