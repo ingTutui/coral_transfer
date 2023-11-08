@@ -14,9 +14,19 @@ cv2.resizeWindow('Generated Film', width, heigh)
 
 cv2.setWindowProperty('Generated Film', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)  # Set the window to fullscreen mode
 
+
+# Creare un'immagine completamente bianca
+print('inizializzo...')
+white_image = np.ones((heigh, width, 3), dtype=np.uint8) * 255  # Bianco puro
+# Mostrare l'immagine bianca
+cv2.imshow('Generated Film', white_image)
+
+
 # plotta logo
-#logo_image = cv2.imread('esp_logo.png')
-#cv2.imshow('Generated Film', logo_image)
+print('Carico il logo...')
+logo_image = cv2.imread('esp_logo.png')
+cv2.imshow('Generated Film', logo_image)
+
 
 
 # Carica il modello TFLite
@@ -65,14 +75,15 @@ while True:
         # Mostra la prima immagine subito
         if i == 0:
             if first_run:
+                print('First image created...')
                 cv2.imshow('Generated Film', image)
-                if cv2.waitKey(30) & 0xFF == ord('q'):
-                    break
+                # if cv2.waitKey(1) & 0xFF == ord('q'):
+                #     break
                 first_run = False
             else:
                 cv2.imshow('Generated Film', last_image)
-                if cv2.waitKey(30) & 0xFF == ord('q'):
-                    break
+                # if cv2.waitKey(1) & 0xFF == ord('q'):
+                #     break
                 # pass
 
         end_time = time.perf_counter()
@@ -87,7 +98,7 @@ while True:
     start_time = time.perf_counter()
     for img in images_list:
         cv2.imshow('Generated Film', img)
-        if cv2.waitKey(30) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     end_time = time.perf_counter()
     cpu_time = (end_time - start_time)
